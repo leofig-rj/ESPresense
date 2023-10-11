@@ -1,10 +1,5 @@
 # ESPresense
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/ESPresense/ESPresense)
-![GitHub all releases](https://img.shields.io/github/downloads/ESPresense/ESPresense/total)
-[![.github/workflows/main.yml](https://github.com/ESPresense/ESPresense/actions/workflows/build.yml/badge.svg)](https://github.com/ESPresense/ESPresense/actions/workflows/build.yml)
-
-
 An ESP32 based presence detection node for use with the [Home Assistant](https://www.home-assistant.io/) [`mqtt_room` component](https://www.home-assistant.io/components/sensor.mqtt_room/) or [ESPresense-companion](https://github.com/ESPresense/ESPresense-companion) for indoor positioning
 
 Forked to create four firmware (`lf-sw-0`, `lf-sw-1`, `lf-sw-2` and `lf-sw-3`) using ESP32-C3 without sensors and with 0, 1, 2 or 3 switchs (input pins associated with output pins).
