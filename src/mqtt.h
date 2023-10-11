@@ -22,6 +22,9 @@ bool sendButtonDiscovery(const String &name, const String &entityCategory);
 bool sendSwitchDiscovery(const String &name, const String &entityCategory);
 bool sendNumberDiscovery(const String &name, const String &entityCategory);
 bool sendLightDiscovery(const String &name, const String &entityCategory, bool rgb);
+#ifdef LF_SW
+bool sendLightSwitchDiscovery(const String &name, const String &entityCategory);
+#endif
 
 bool sendDeleteDiscovery(const String &domain, const String &name);
 

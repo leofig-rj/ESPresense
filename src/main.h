@@ -18,8 +18,12 @@
 #include "HttpReleaseUpdate.h"
 #include "HttpWebServer.h"
 #include "Motion.h"
+#ifdef LF_SW
+#include "LightSwitch.h"
+#else
 #include "Switch.h"
 #include "Button.h"
+#endif
 #include "Network.h"
 #include "SerialImprov.h"
 #include "Updater.h"

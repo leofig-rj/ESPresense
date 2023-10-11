@@ -26,6 +26,10 @@
       <file path="$PROJECT_DIR$/cmake-build-m5stickc-plus-sensors" />
       <file path="$PROJECT_DIR$/cmake-build-m5stickc-sensors" />
       <file path="$PROJECT_DIR$/cmake-build-macchina-a0" />
+      <file path="$PROJECT_DIR$/cmake-build-lf-sw-0" />
+      <file path="$PROJECT_DIR$/cmake-build-lf-sw-1" />
+      <file path="$PROJECT_DIR$/cmake-build-lf-sw-2" />
+      <file path="$PROJECT_DIR$/cmake-build-lf-sw-3" />
     </excludeRoots>
   </component>
 </project>

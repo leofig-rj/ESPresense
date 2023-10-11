@@ -24,14 +24,15 @@ String updateUrl;
 
 String getFirmwareUrl() {
 #ifdef FIRMWARE
-    if (!prerelease) return "https://github.com/ESPresense/ESPresense/releases/latest/download/" FIRMWARE ".bin";
-    #ifdef BRANCH
-        return "https://espresense.com/artifacts/latest/download/" BRANCH "/" FIRMWARE ".bin";
-    #else
-        return "https://espresense.com/releases/latest-any/download/" FIRMWARE ".bin";
-    #endif
+    if (!prerelease) return "https://github.com/leofig-rj/ESPresense/releases/latest/download/" FIRMWARE ".bin";
+//    #ifdef BRANCH
+//        return "https://espresense.com/artifacts/latest/download/" BRANCH "/" FIRMWARE ".bin";
+//    #else
+//        return "https://espresense.com/releases/latest-any/download/" FIRMWARE ".bin";
+//    #endif
+    return "https://github.com/leofig-rj/ESPresense/releases/latest/download/" FIRMWARE ".bin";
 #else
-    return "https://github.com/ESPresense/ESPresense/releases/latest/download/esp32.bin";
+    return "https://github.com/leofig-rj/ESPresense/releases/latest/download/esp32.bin";
 #endif
 }
 
@@ -181,7 +182,11 @@ bool SendOnline() {
 }
 
 bool SendDiscovery() {
+#ifdef LF_SW
+    return true;
+#else
     return sendSwitchDiscovery("Auto Update", EC_CONFIG) && sendSwitchDiscovery("Arduino OTA", EC_CONFIG) && sendSwitchDiscovery("Prerelease", EC_CONFIG) && sendButtonDiscovery("Update", EC_DIAGNOSTIC);
+#endif
 }
 
 void ConnectToWifi() {

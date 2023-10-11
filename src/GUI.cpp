@@ -2,7 +2,9 @@
 
 #include "BleFingerprintCollection.h"
 #include "Display.h"
+#ifndef LF_SW
 #include "LEDs.h"
+#endif
 #include "defaults.h"
 
 namespace GUI {
@@ -31,24 +33,36 @@ void Setup(bool beforeWifi) {
         };
         Display::Setup();
     } else {
+#ifndef LF_SW
         LEDs::Setup();
+#endif        
     }
 }
 
 bool SendOnline() {
+#ifdef LF_SW
+    return true;
+#else
     return LEDs::SendOnline();
+#endif
 }
 
 void SerialReport() {
+#ifndef LF_SW
     LEDs::SerialReport();
+#endif
 }
 
 void ConnectToWifi() {
+#ifndef LF_SW
     LEDs::ConnectToWifi();
+#endif
 }
 
 void Loop() {
+#ifndef LF_SW
     LEDs::Loop();
+#endif
 }
 
 void Added(BleFingerprint *f) {
@@ -72,7 +86,9 @@ void Left(BleFingerprint *f) {
 }
 void Motion(bool pir, bool radar) {
     Serial.printf("%u Motion | Pir: %s Radar: %s\r\n", xPortGetCoreID(), pir ? "yes" : "no", radar ? "yes" : "no");
+#ifndef LF_SW
     LEDs::Motion(pir, radar);
+#endif
 }
 
 void Switch(bool switch_1, bool switch_2) {
@@ -84,11 +100,15 @@ void Button(bool button_1, bool button_2) {
 }
 
 void Seen(bool inprogress) {
+#ifndef LF_SW
     LEDs::Seen(inprogress);
+#endif
 }
 
 void Update(unsigned int percent) {
+#ifndef LF_SW
     LEDs::Update(percent);
+#endif
     if (percent == UPDATE_STARTED) {
         Serial.printf("%u Update | %s\r\n", xPortGetCoreID(), "started");
         Display::Status("Update:%s\r\n", "started");
@@ -112,11 +132,15 @@ void Counting(BleFingerprint *f, bool add) {
 }
 
 void Wifi(unsigned int percent) {
+#ifndef LF_SW
     LEDs::Wifi(percent);
+#endif
 }
 
 void Portal(unsigned int percent) {
+#ifndef LF_SW
     LEDs::Portal(percent);
+#endif
 }
 
 void Status(const char *format, ...) {
@@ -131,14 +155,24 @@ void Status(const char *format, ...) {
 }
 
 bool Command(String &command, String &pay) {
+#ifdef LF_SW
+    return false;
+#else
     return LEDs::Command(command, pay);
+#endif
 }
 
 bool SendDiscovery() {
+#ifdef LF_SW
+    return true;
+#else
     return LEDs::SendDiscovery();
+#endif
 }
 
 void Count(unsigned int count) {
+#ifndef LF_SW
     LEDs::Count(count);
+#endif
 }
 }  // namespace GUI

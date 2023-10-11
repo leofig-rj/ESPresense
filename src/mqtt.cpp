@@ -213,6 +213,29 @@ bool sendLightDiscovery(const String &name, const String &entityCategory, bool r
     return pub(discoveryTopic.c_str(), 0, true, buffer.c_str());
 }
 
+#ifdef LF_SW
+bool sendLightSwitchDiscovery(const String &name, const String &entityCategory)
+{
+    auto slug = slugify(name);
+
+    commonDiscovery();
+    doc["~"] = roomsTopic;
+    doc["name"] = name;
+    doc["uniq_id"] = Sprintf("espresense_%06x_%s", CHIPID, slug.c_str());
+    doc["schema"] = "json";
+    doc["stat_t"] = "~/" + slug;
+    doc["cmd_t"] = "~/" + slug + "/set";
+    doc["brightness"] = false;
+    doc["rgb"] = false;
+    if (!entityCategory.isEmpty()) doc["entity_category"] = entityCategory;
+
+    String buffer = String();
+    serializeJson(doc, buffer);
+    const String discoveryTopic = Sprintf("%s/light/espresense_%06x/%s/config", homeAssistantDiscoveryPrefix.c_str(), CHIPID, slug.c_str());
+    return pub(discoveryTopic.c_str(), 0, true, buffer.c_str());
+}
+#endif
+
 bool sendDeleteDiscovery(const String &domain, const String &name)
 {
     auto slug = slugify(name);

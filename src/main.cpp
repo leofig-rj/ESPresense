@@ -24,8 +24,12 @@ bool sendTelemetry(unsigned int totalSeen, unsigned int totalFpSeen, int unsigne
             && pub((roomsTopic + "/count_ids").c_str(), 0, true, BleFingerprintCollection::countIds.c_str())
             && Updater::SendOnline()
             && Motion::SendOnline()
+#ifdef LF_SW
+            && LightSwitch::SendOnline()
+#else
             && Switch::SendOnline()
             && Button::SendOnline()
+#endif
             && GUI::SendOnline()
         ) {
             online = true;
@@ -47,8 +51,12 @@ bool sendTelemetry(unsigned int totalSeen, unsigned int totalFpSeen, int unsigne
             && Updater::SendDiscovery()
             && GUI::SendDiscovery()
             && Motion::SendDiscovery()
+#ifdef LF_SW
+            && LightSwitch::SendDiscovery()
+#else
             && Switch::SendDiscovery()
             && Button::SendDiscovery()
+#endif
             && Enrollment::SendDiscovery()
             && Battery::SendDiscovery()
             && CAN::SendDiscovery()
@@ -183,8 +191,10 @@ void setupNetwork() {
 
     BleFingerprintCollection::ConnectToWifi();
     Motion::ConnectToWifi();
+#ifndef LF_SW
     Switch::ConnectToWifi();
     Button::ConnectToWifi();
+#endif
 
 #ifdef SENSORS
     DHT::ConnectToWifi();
@@ -247,8 +257,10 @@ void setupNetwork() {
     Serial.printf("Max Distance: %.2f\r\n", BleFingerprintCollection::maxDistance);
     GUI::SerialReport();
     Motion::SerialReport();
+#ifndef LF_SW
     Switch::SerialReport();
     Button::SerialReport();
+#endif
 #ifdef SENSORS
     I2C::SerialReport();
     DHT::SerialReport();
@@ -335,10 +347,15 @@ void onMqttMessage(const char *topic, const char *payload) {
             changed = true;
         else if (Motion::Command(command, pay))
             changed = true;
+#ifdef LF_SW
+        else if (LightSwitch::Command(command, pay))
+            changed = true;
+#else
         else if (Switch::Command(command, pay))
             changed = true;
         else if (Button::Command(command, pay))
             changed = true;
+#endif
         if (changed) online = false;
     } else {
     skip:
@@ -545,8 +562,12 @@ void setup() {
 #endif
     GUI::Setup(false);
     Motion::Setup();
+#ifdef LF_SW
+    LightSwitch::Setup();
+#else
     Switch::Setup();
     Button::Setup();
+#endif
     Battery::Setup();
     CAN::Setup();
 #ifdef SENSORS
@@ -580,8 +601,12 @@ void loop() {
     }
     GUI::Loop();
     Motion::Loop();
+#ifdef LF_SW
+    LightSwitch::Loop();
+#else
     Switch::Loop();
     Button::Loop();
+#endif
     HttpWebServer::Loop();
     SerialImprov::Loop(false);
 #if M5STICK
